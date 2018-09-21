@@ -1,83 +1,109 @@
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
+
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+const node_env = process.env.NODE_ENV || 'production';
+const isDev = node_env === 'development';
+
 const config = {
-    // 入口文件，数组中的所有文件会按顺序打包
-    entry: [
-        path.join(__dirname, '/src/index.js'),
-    ],
-    // 构建目录 =》输出文件的路径与名称（编译出来的东西放在哪里）
-    output: {
-        path: path.resolve(__dirname, 'build'), // 输出文件的保存路径
-        publicPath: '/', // 网站运行时的访问路径
-        filename: 'bundle.js', // 输出文件的名称
+  entry: {
+    page1: path.resolve('src/app/index.js'),
+  },
+  output: {
+    path: path.resolve('dist'),
+    filename: 'bundle.js',
+  },
+  mode: node_env,
+  devtool: isDev ? 'source-map' : 'eval',
+  resolve: {
+    extensions: ['.js', '.css'],
+    alias: {
+      '@': path.resolve(__dirname, 'src')
     },
-    resolve: {
-        // 扩展名
-        extensions: ['.js', '.css', '.jsx', '.scss', '.vue'],
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
     },
-    devtool: 'eval',
-    // Server Configuration options
-    devServer: {
-        contentBase: 'src/www', // Relative directory for base of server =》www下面的文件都可以映射到根目录下面
-        // devtool: 'eval', // source mapping style
-        // node: {
-        //     console: true,
-        // },
-        // debug: true,
-        hot: true, // Live-reload
-        inline: true, // Inline mode is recommended when using Hot Module Replacement.
-        port: 9090, // Port Number
-        https: true, // served over HTTP/2 with HTTPS
-        host: 'localhost', // Change to '0.0.0.0' for external facing server
-        // proxy: {
-        //     // 反向代理
-        //     '/proxy/*': {
-        //         target: 'http://cms.meitu-int.com',
-        //         changeOrigin: true,
-        //         pathRewrite: {
-        //             '^/proxy/': '/',
-        //         },
-        //         secure: false,
-        //     },
-        // },
-    },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        // 自动生成页面
-        new HtmlWebpackPlugin({
-            inject: 'body',
-            filename: 'index.html',
-            chunk: ['index'], // 分片
-            hash: true,
-            template: path.join(__dirname, '/src/index.html'),
-        }),
-    ],
-    module: {
-        loaders: [
-          {
-            // 去监听以.jsx或者.js结尾的
-            test: /(\.jsx|\.js)$/,
-            // 加载器
-            loader: 'babel-loader',
-            query: {
-                // babel
-                presets: ['es2015'],
-            },
-          }, {
-            test: /\.css$/,
-            loaders: ['style', 'css'],
-          }, {
-            test: /\.vue$/,
-            loader: 'vue-loader',
-          }, {
-            test: /\.(png|jpg|gif|svg)$/,
-            loader: 'file-loader',
-            options: {
-              name: '[path][name].[ext]',
-            }
+  },
+  module: {
+    rules: [{
+      test: /\.(css|scss)$/,
+      use: [
+        isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+        {
+          loader: 'css-loader', options: {
+            sourceMap: isDev
           }
-        ],
-    },
+        },
+        {
+          loader: 'sass-loader', options: {
+            sourceMap: isDev
+          }
+        },
+        {
+          loader: "postcss-loader", options: {
+              plugins: [
+                require("autoprefixer")
+              ]
+          }
+        }
+      ]
+    }, {
+      test: /\.js$/,
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true
+        }
+      }, 'eslint-loader'],
+      exclude: path.resolve('node_modules'),
+    }, {
+      test: /\.(png|svg|jpg|jpeg|gif)$/,
+      use: [{
+        loader: 'url-loader', options: {
+          limit: 8192
+        }
+      }]
+    }]
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV' : JSON.stringify(node_env)
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html?[hash]',
+      template: path.resolve('src/app/index.html')
+    }),
+    new CleanWebpackPlugin(['dist'])
+  ],
 };
+
+if (isDev) {
+  // development
+  config.devServer = {
+    contentBase: path.resolve('src/app'),
+    inline: true,
+    hot: true,
+    port: 3005,
+    overlay: true,
+    stats: "errors-only",
+  };
+  config.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+  );
+} else {
+  // production
+  config.plugins.push(
+    new UglifyJsPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].[hash].css',
+    })
+  );
+}
 module.exports = config;
