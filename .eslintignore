@@ -2,3 +2,4 @@
 babel.config.js
 package.json
 webpack.config.js
+dist
