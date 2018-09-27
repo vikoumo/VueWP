@@ -46,6 +46,7 @@
     "url-loader": "^1.1.1",
     "vue-eslint-parser": "^3.2.2",
     "vue-loader": "^15.4.2",
+    "vue-template-compiler": "^2.5.17",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.6"
