@@ -5,13 +5,13 @@ module.exports = {
     browser: true,
     node: true,
   },
-  extends: [
-    'airbnb-base',
-  ],
+  extends: [ 'eslint:recommended', 'airbnb-base' ],
+  parser: ['vue-eslint-parser', 'babel-eslint'],
   parserOptions: {
     ecmaVersion: 8,
   },
-  parser: 'babel-eslint',
   plugins: [],
-  rules: {},
+  rules: {
+    "comma-dangle": 0, //是否允许对象中出现结尾逗号
+  },
 };

@@ -20,7 +20,7 @@ const config = {
   mode: node_env,
   devtool: isDev ? 'source-map' : 'eval',
   resolve: {
-    extensions: ['.js', '.css'],
+    extensions: ['.js', '.css', '.vue'],
     alias: {
       '@': path.resolve(__dirname, 'src')
     },
@@ -69,6 +69,9 @@ const config = {
           limit: 8192
         }
       }]
+    }, {
+      test: /\.vue$/,
+      use: 'vue-loader'
     }]
   },
   plugins: [
@@ -89,7 +92,7 @@ if (isDev) {
     contentBase: path.resolve('src/app'),
     inline: true,
     hot: true,
-    port: 3005,
+    port: 3001,
     overlay: true,
     stats: "errors-only",
   };

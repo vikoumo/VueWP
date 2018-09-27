@@ -1,9 +1,9 @@
 {
-  "name": "cc",
+  "name": "vue-demo",
   "version": "1.0.0",
-  "description": "dwy",
+  "description": "cc",
   "scripts": {
-    "eslint": "eslint --ext .js src",
+    "eslint": "eslint --ext .js,.vue src",
     "test": "NODE_ENV=development webpack",
     "build": "webpack",
     "start": "NODE_ENV=development webpack-dev-server --config webpack.config.js"
@@ -34,6 +34,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-vue": "^4.7.1",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.2",
@@ -43,10 +44,13 @@
     "style-loader": "^0.23.0",
     "uglifyjs-webpack-plugin": "^1.3.0",
     "url-loader": "^1.1.1",
+    "vue-eslint-parser": "^3.2.2",
+    "vue-loader": "^15.4.2",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.6"
   },
   "dependencies": {
+    "vue": "^2.5.17"
   }
 }
