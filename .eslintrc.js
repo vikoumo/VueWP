@@ -6,12 +6,14 @@ module.exports = {
     node: true,
   },
   extends: [ 'eslint:recommended', 'airbnb-base' ],
-  parser: ['vue-eslint-parser', 'babel-eslint'],
+  parser: 'vue-eslint-parser',
   parserOptions: {
-    ecmaVersion: 8,
+    "sourceType": "module",
+    "ecmaVersion": 2018,
+    "parser": "babel-eslint",
   },
   plugins: [],
   rules: {
-    "comma-dangle": 0, //是否允许对象中出现结尾逗号
+    "comma-dangle": ["off", "never"], //是否允许对象中出现结尾逗号
   },
 };
