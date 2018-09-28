@@ -6,6 +6,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 const node_env = process.env.NODE_ENV || 'production';
 const isDev = node_env === 'development';
@@ -16,7 +17,7 @@ const config = {
   },
   output: {
     path: path.resolve('dist'),
-    filename: 'bundle.js',
+    filename: 'bundle.[hash].js',
   },
   mode: node_env,
   devtool: isDev ? 'source-map' : 'eval',
@@ -34,24 +35,55 @@ const config = {
   module: {
     rules: [{
       test: /\.(css|scss)$/,
-      use: [
-        isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+      oneOf: [
+        // 这里匹配 `<style module>`
         {
-          loader: 'css-loader', options: {
-            sourceMap: isDev
-          }
+          resourceQuery: /module/,
+          use: [
+            isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader', options: {
+                sourceMap: isDev,
+                modules: true,
+                localIdentName: '[local]_[hash:base64:8]'
+              }
+            },
+            {
+              loader: 'sass-loader', options: {
+                sourceMap: isDev
+              }
+            },
+            {
+              loader: "postcss-loader", options: {
+                  plugins: [
+                    require("autoprefixer")
+                  ]
+              }
+            }
+          ]
         },
+        // 这里匹配普通的 `<style>` 或 `<style scoped>`
         {
-          loader: 'sass-loader', options: {
-            sourceMap: isDev
-          }
-        },
-        {
-          loader: "postcss-loader", options: {
-              plugins: [
-                require("autoprefixer")
-              ]
-          }
+          use: [
+            isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader', options: {
+                sourceMap: isDev,
+              }
+            },
+            {
+              loader: 'sass-loader', options: {
+                sourceMap: isDev
+              }
+            },
+            {
+              loader: "postcss-loader", options: {
+                  plugins: [
+                    require("autoprefixer")
+                  ]
+              }
+            }
+          ]
         }
       ]
     }, {
@@ -83,7 +115,8 @@ const config = {
       filename: 'index.html?[hash]',
       template: path.resolve('src/app/index.html')
     }),
-    new CleanWebpackPlugin(['dist'])
+    new CleanWebpackPlugin(['dist']),
+    new VueLoaderPlugin(),
   ],
 };
 
@@ -99,7 +132,9 @@ if (isDev) {
   };
   config.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
-    new VueLoaderPlugin(),
+    // new StyleLintPlugin({
+    //   files: ['**/*.{vue,htm,html,css,sss,less,scss,sass}'],
+    // })
   );
 } else {
   // production
