@@ -1,6 +1,5 @@
 const presets = [
   ["@babel/env", {
-    debug: true,
     useBuiltIns: "usage"
   }]
 ];

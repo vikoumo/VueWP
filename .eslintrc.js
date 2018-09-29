@@ -14,6 +14,6 @@ module.exports = {
   },
   plugins: [],
   rules: {
-    "comma-dangle": ["off", "never"], //是否允许对象中出现结尾逗号
+    "comma-dangle": ["error", "never"], //是否允许对象中出现结尾逗号
   },
 };

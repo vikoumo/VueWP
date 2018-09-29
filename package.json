@@ -4,7 +4,8 @@
   "description": "cc",
   "scripts": {
     "eslint": "eslint --ext .js,.vue src",
-    "test": "NODE_ENV=development webpack",
+    "test1": "NODE_ENV=development webpack",
+    "test2": "NODE_ENV=production  webpack-dev-server --config webpack.config.js",
     "build": "webpack",
     "start": "NODE_ENV=development webpack-dev-server --config webpack.config.js"
   },

@@ -17,7 +17,7 @@ const config = {
   },
   output: {
     path: path.resolve('dist'),
-    filename: 'bundle.[hash].js',
+    filename: 'bundle.[hash:8].js',
   },
   mode: node_env,
   devtool: isDev ? 'source-map' : 'eval',
@@ -29,8 +29,18 @@ const config = {
   },
   optimization: {
     splitChunks: {
-      chunks: 'all',
-    },
+      cacheGroups: {
+        vendor:{
+          chunks:"all",
+          test: /[\\/]node_modules[\\/]/,
+          name:"vendor",
+          minChunks: 1,
+          maxInitialRequests: 5,
+          minSize: 0,
+          priority:100,
+        }
+      }
+    }
   },
   module: {
     rules: [{
@@ -112,7 +122,7 @@ const config = {
       'process.env.NODE_ENV' : JSON.stringify(node_env)
     }),
     new HtmlWebpackPlugin({
-      filename: 'index.html?[hash]',
+      filename: 'index.html?[hash:8]',
       template: path.resolve('src/app/index.html')
     }),
     new CleanWebpackPlugin(['dist']),
@@ -141,8 +151,8 @@ if (isDev) {
   config.plugins.push(
     new UglifyJsPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[hash].css',
-      chunkFilename: '[id].[hash].css',
+      filename: '[name].[hash:8].css',
+      chunkFilename: '[id].[hash:8].css',
     })
   );
 }
