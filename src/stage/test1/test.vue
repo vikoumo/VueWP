@@ -1,27 +1,12 @@
 <template>
-  <div class="example">
-    <p :class="a.red">
-      This should be red
-    </p>
-    <div v-on:click="testaxio">{{ axio }}</div>
-    <div v-on:click="testprintRouter">{{ printRouter }}</div>
-  </div>
+ <h2>1233</h2>
 </template>
-<style module="a">
-
-.example {
-  color: red;
-}
-.red {
-  color: red;
-}
-.bold {
-  font-weight: bold;
-}
+<style module="a" lang="scss">
+    html{
+        background:url("../../imgs/bg4.png");
+    }
 </style>
 <script>
-import './App.scss';
-
 
 export default {
   data() {
@@ -32,7 +17,7 @@ export default {
   },
   methods: {
     testaxio(){
-      this.axios.get('/user?ID=12345')
+      this.$http.get('/user?ID=12345')
         .then((response) => {
           // handle success
           console.log(response);

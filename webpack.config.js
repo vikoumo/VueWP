@@ -6,25 +6,27 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const StyleLintPlugin = require('stylelint-webpack-plugin');
+// const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 const node_env = process.env.NODE_ENV || 'production';
 const isDev = node_env === 'development';
 
 const config = {
   entry: {
-    page1: path.resolve('src/app/index.js'),
+    index: path.resolve('src/app/index.js'),
   },
   output: {
     path: path.resolve('dist'),
     filename: 'bundle.[hash:8].js',
+    publicPath: isDev ? '/' : 'https://cdn.example.com/assets/'
   },
   mode: node_env,
   devtool: isDev ? 'source-map' : 'eval',
   resolve: {
     extensions: ['.js', '.css', '.vue'],
     alias: {
-      '@': path.resolve(__dirname, 'src/stage')
+      vue: 'vue/dist/vue.js',
+      '@': path.resolve(__dirname, 'src')
     },
   },
   optimization: {
@@ -141,7 +143,7 @@ if (isDev) {
     stats: "errors-only",
   };
   config.plugins.push(
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin()
     // new StyleLintPlugin({
     //   files: ['**/*.{vue,htm,html,css,sss,less,scss,sass}'],
     // })
@@ -151,7 +153,7 @@ if (isDev) {
   config.plugins.push(
     new UglifyJsPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[hash:8].css',
+      filename: 'css/[name].[hash:8].css',
       chunkFilename: '[id].[hash:8].css',
     })
   );

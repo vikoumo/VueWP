@@ -1,21 +1,28 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import App from '../App.vue';
+import axios from 'axios';
+import App from '../stage/App.vue';
+import Test from '../stage/test1/test.vue';
 
-const Foo = { template: '<div>foo</div>' };
-const Bar = { template: '<div>bar</div>' };
+Vue.prototype.axios = axios;
+Vue.use(VueRouter);
+
 const routes = [
   { path: '/', component: App },
-  { path: '/foo', component: Foo },
-  { path: '/bar', component: Bar }
+  { path: '/test', component: Test }
 ];
 
 const router = new VueRouter({
   routes
 });
 /* eslint-disable no-new */
-new Vue({
-  el: '#root',
-  render: h => h(App),
-  router
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next();
 });
+
+new Vue({
+  router
+}).$mount('#root');
