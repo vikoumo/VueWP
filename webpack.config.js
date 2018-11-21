@@ -24,7 +24,7 @@ const config = {
   resolve: {
     extensions: ['.js', '.css', '.vue'],
     alias: {
-      '@': path.resolve(__dirname, 'src')
+      '@': path.resolve(__dirname, 'src/stage')
     },
   },
   optimization: {
