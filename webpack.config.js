@@ -25,7 +25,11 @@ const config = {
   resolve: {
     extensions: ['.js', '.css', '.vue'],
     alias: {
-      vue: 'vue/dist/vue.js',
+      // 有两个运行环境配置的版本：Compiler版本、Runtime版本。
+      // 当对template模板内容编译，需要使用Compiler版本。
+      // 如果使用vue-loader加载.vue文件时（组件文件），就需要Runtime版本
+      // 从Compiler版本修改为Runtime版本
+      'vue$': 'vue/dist/vue.esm.js',
       '@': path.resolve(__dirname, 'src')
     },
   },
@@ -111,7 +115,9 @@ const config = {
       test: /\.(png|svg|jpg|jpeg|gif)$/,
       use: [{
         loader: 'url-loader', options: {
-          limit: 8192
+          limit: 8192,
+          publicPath:isDev ? "/images" : "https://cdn.example.com/assets/",
+          outputPath:'images/'
         }
       }]
     }, {

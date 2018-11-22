@@ -1,37 +1,44 @@
 <template>
-  <div class="example">
+  <div class="app">
+    <ul>
+      <li><router-link to='/page1'>router-link jump to page1</router-link></li>
+      <li @click="jumpToPage1">$router.push page1</li>
+      <li><router-link to='/page1/456'>jump to page1/456</router-link></li>
+    </ul>
     <p :class="a.red">
       This should be red
     </p>
-    <div v-on:click="testaxio">{{ axio }}</div>
-    <div v-on:click="testprintRouter">{{ printRouter }}</div>
+    <div v-on:click="axio">axio</div>
   </div>
 </template>
 <style module="a">
-
-.example {
+.app {
   color: red;
 }
 .red {
   color: red;
-}
-.bold {
   font-weight: bold;
 }
 </style>
 <script>
 import './App.scss';
 
-
 export default {
   data() {
     return {
-      axio: 'axio',
-      printRouter: 'printRouter'
     };
   },
   methods: {
-    testaxio(){
+    jumpToPage1() {
+      this.$router.push({
+        path: '/page1',
+        // 到page1页面的时候params不会传过去，query会
+        // 把路由导航到 /user/123 路径 ??
+        params: { userId: 123 },
+        query: { plan: 'private' }
+      });
+    },
+    axio() {
       this.axios.get('/user?ID=12345')
         .then((response) => {
           // handle success
@@ -44,9 +51,6 @@ export default {
         .then(() => {
           // always executed
         });
-    },
-    testprintRouter(){
-      console.log('router', this.$route);
     }
   }
 };

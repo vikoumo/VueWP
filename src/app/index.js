@@ -1,19 +1,17 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import axios from 'axios';
-import App from '../stage/App.vue';
-import Test from '../stage/test1/test.vue';
+import routes from './router';
+// 为什么这里的import不能用@？？？？
 
 Vue.prototype.axios = axios;
+// 挂在VueRouter，这样this.$route才能用
 Vue.use(VueRouter);
-
-const routes = [
-  { path: '/', component: App },
-  { path: '/test', component: Test }
-];
-
+// router分离？？
+const vueRoutes = routes();
+console.log('routes', vueRoutes);
 const router = new VueRouter({
-  routes
+  vueRoutes
 });
 /* eslint-disable no-new */
 router.beforeEach((to, from, next) => {
