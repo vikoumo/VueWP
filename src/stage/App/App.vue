@@ -8,7 +8,7 @@
     <p :class="a.red">
       This should be red
     </p>
-    <div v-on:click="axio">axio</div>
+    <div v-on:click="ajax()">ajax</div>
   </div>
 </template>
 <style module="a">
@@ -21,7 +21,7 @@
 }
 </style>
 <script>
-import './App.scss';
+import '@/stage/App/App.scss';
 
 export default {
   data() {
@@ -31,14 +31,12 @@ export default {
   methods: {
     jumpToPage1() {
       this.$router.push({
-        path: '/page1',
-        // 到page1页面的时候params不会传过去，query会
-        // 把路由导航到 /user/123 路径 ??
-        params: { userId: 123 },
+        name: 'page1Id',
+        params: { id: 123 },
         query: { plan: 'private' }
       });
     },
-    axio() {
+    ajax() {
       this.axios.get('/user?ID=12345')
         .then((response) => {
           // handle success

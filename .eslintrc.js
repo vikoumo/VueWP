@@ -8,12 +8,19 @@ module.exports = {
   extends: [ 'eslint:recommended', 'airbnb-base' ],
   parser: 'vue-eslint-parser',
   parserOptions: {
-    "sourceType": "module",
-    "ecmaVersion": 2018,
-    "parser": "babel-eslint",
+    'sourceType': 'module',
+    'ecmaVersion': 2018,
+    'parser': 'babel-eslint',
   },
   plugins: [],
+  settings: {
+    'import/resolver': {
+      'webpack': {
+        config: 'webpack.config.js'
+      }
+    }
+  },
   rules: {
-    "comma-dangle": ["error", "never"], //是否允许对象中出现结尾逗号
+    'comma-dangle': ['error', 'never'], //是否允许对象中出现结尾逗号
   },
 };

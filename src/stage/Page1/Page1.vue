@@ -10,8 +10,6 @@
 export default {
   data() {
     return {
-      axio: 'axio',
-      printRouter: 'printRouter'
     };
   },
   watch: {
@@ -34,26 +32,12 @@ export default {
       if (window.history.length > 1) {
         this.$router.go(-1);
       } else {
-        this.$router.push('/');
+        this.$router.push({ name: 'home' });
       }
     },
     showRoute() {
       console.log('$route', this.$route);
     }
-    // testaxio(){
-    //   this.$http.get('/user?ID=12345')
-    //     .then((response) => {
-    //       // handle success
-    //       console.log(response);
-    //     })
-    //     .catch((error) => {
-    //       // handle error
-    //       console.log(error);
-    //     })
-    //     .then(() => {
-    //       // always executed
-    //     });
-    // },
   }
 };
 
