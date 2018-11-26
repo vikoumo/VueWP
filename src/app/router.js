@@ -1,6 +1,6 @@
 import Router from 'vue-router';
-import App from '../stage/App/App.vue';
-import Page1 from '../stage/Page1/Page1.vue';
+import App from '@/stage/App/App.vue';
+import Page1 from '@/stage/Page1/Page1.vue';
 
 export default function createRouter() {
   return new Router({
@@ -19,14 +19,30 @@ export default function createRouter() {
       meta: {
         title: 'page1'
       }
-    }, {
-      // 动态路径参数 以冒号开头
+    },
+    // {
+    // 动态路径参数 以冒号开头
+    // path: '/page1/:id',
+    // name: 'page1Id',
+    // component: Page1,
+    // meta: {
+    //   title: 'page1'
+    // }
+    // },
+    {
       path: '/page1/:id',
       name: 'page1Id',
       component: Page1,
+      // 通过 props 解耦，取代与 $route 的耦合
+      /* 怎么写？ */
+      // props: (route) => ({ query: route.query.q }),
       meta: {
         title: 'page1'
       }
+    }, {
+      path: '/page',
+      // 重定向
+      redirect: { name: 'page1' }
     }]
   });
 }

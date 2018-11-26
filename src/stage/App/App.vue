@@ -33,7 +33,7 @@ export default {
       this.$router.push({
         name: 'page1Id',
         params: { id: 123 },
-        query: { plan: 'private' }
+        query: { plan: 'private', q: 'vue' }
       });
     },
     ajax() {

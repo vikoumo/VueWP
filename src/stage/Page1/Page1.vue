@@ -1,13 +1,16 @@
 <template>
   <div class="page1">
     <div @click="showRoute()">显示路由信息</div>
+    <div @click="showProps()">显示props信息</div>
     <div @click="goBack()">回退</div>
-    <div>User {{ $route.params.id }}</div>
+    <div>User (route){{ $route.params.id }}</div>
+    <div>User (props){{ id }}</div>
   </div>
 </template>
 <script>
 
 export default {
+  props: ['id'],
   data() {
     return {
     };
@@ -37,7 +40,11 @@ export default {
     },
     showRoute() {
       console.log('$route', this.$route);
+    },
+    showProps() {
+      console.log('props', this.props);
     }
+    // this.props不管用？应该用什么拿到props信息？
   }
 };
 

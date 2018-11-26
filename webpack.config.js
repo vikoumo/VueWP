@@ -147,6 +147,7 @@ if (isDev) {
     port: 3001,
     overlay: true,
     stats: "errors-only",
+    historyApiFallback: true
   };
   config.plugins.push(
     new webpack.HotModuleReplacementPlugin()
