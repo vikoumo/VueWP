@@ -18,10 +18,19 @@ const config = {
   output: {
     path: path.resolve('dist'),
     filename: 'bundle.[hash:8].js',
-    publicPath: isDev ? '/' : 'https://cdn.example.com/assets/'
+    publicPath: '/'
   },
   mode: node_env,
   devtool: isDev ? 'source-map' : 'eval',
+  devServer: {
+    contentBase: path.resolve('src/app'),
+    inline: true,
+    hot: true,
+    port: isDev ? 3001 : 3005,
+    overlay: true,
+    stats: "errors-only",
+    historyApiFallback: true
+  },
   resolve: {
     extensions: ['.js', '.css', '.vue'],
     alias: {
@@ -36,14 +45,14 @@ const config = {
   optimization: {
     splitChunks: {
       cacheGroups: {
-        vendor:{
-          chunks:"all",
+        vendor: {
+          chunks: "all",
           test: /[\\/]node_modules[\\/]/,
           name:"vendor",
           minChunks: 1,
           maxInitialRequests: 5,
           minSize: 0,
-          priority:100,
+          priority: 100,
         }
       }
     }
@@ -71,9 +80,9 @@ const config = {
             },
             {
               loader: "postcss-loader", options: {
-                  plugins: [
-                    require("autoprefixer")
-                  ]
+                plugins: [
+                  require("autoprefixer")
+                ]
               }
             }
           ]
@@ -94,9 +103,9 @@ const config = {
             },
             {
               loader: "postcss-loader", options: {
-                  plugins: [
-                    require("autoprefixer")
-                  ]
+                plugins: [
+                  require("autoprefixer")
+                ]
               }
             }
           ]
@@ -116,8 +125,8 @@ const config = {
       use: [{
         loader: 'url-loader', options: {
           limit: 8192,
-          publicPath:isDev ? "/images" : "https://cdn.example.com/assets/",
-          outputPath:'images/'
+          publicPath: isDev ? '/images' : '/images',
+          outputPath: 'images/'
         }
       }]
     }, {
@@ -135,30 +144,20 @@ const config = {
     }),
     new CleanWebpackPlugin(['dist']),
     new VueLoaderPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
 };
 
 if (isDev) {
   // development
-  config.devServer = {
-    contentBase: path.resolve('src/app'),
-    inline: true,
-    hot: true,
-    port: 3001,
-    overlay: true,
-    stats: "errors-only",
-    historyApiFallback: true
-  };
-  config.plugins.push(
-    new webpack.HotModuleReplacementPlugin()
+  // config.plugins.push(
     // new StyleLintPlugin({
     //   files: ['**/*.{vue,htm,html,css,sss,less,scss,sass}'],
     // })
-  );
+  // );
 } else {
   // production
   config.plugins.push(
-    new UglifyJsPlugin(),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash:8].css',
       chunkFilename: '[id].[hash:8].css',

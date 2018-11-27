@@ -9,6 +9,7 @@
   </div>
 </template>
 <script>
+import '@/utils/scss/reset.scss';
 
 export default {
   props: ['id', 'q', 'plan'],

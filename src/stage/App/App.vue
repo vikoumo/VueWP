@@ -1,15 +1,19 @@
 <template>
-  <div class="app">
+  <div class='app'>
     <ul>
       <li><router-link to='/page1'>router-link jump to page1</router-link></li>
-      <li @click="jumpToPage1">$router.push page1</li>
+      <li @click='jumpToPage1'>$router.push page1</li>
     </ul>
-    <p :class="a.red">
+    <p :class='a.red'>
       This should be red
     </p>
   </div>
 </template>
-<style module="a">
+<style lang="sass" scoped>
+
+</style>
+
+<style module='a'>
 .app {
   color: red;
 }
@@ -20,6 +24,7 @@
 </style>
 <script>
 import '@/stage/App/App.scss';
+// import '@/utils/scss/reset.scss';
 
 export default {
   data() {
