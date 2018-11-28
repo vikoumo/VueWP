@@ -1,11 +1,15 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import axios from 'axios';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 import routes from './router';
 
 Vue.prototype.axios = axios;
 // 挂在VueRouter，这样this.$route才能用
 Vue.use(VueRouter);
+
+Vue.use(ElementUI);
 
 const router = routes();
 /* eslint-disable no-new */

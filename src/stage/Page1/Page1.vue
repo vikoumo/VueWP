@@ -1,5 +1,6 @@
 <template>
   <div class="page1">
+    <h1>scoped</h1>
     <div @click="showRoute()">显示路由信息</div>
     <div @click="showProps()">显示props信息</div>
     <div @click="goBack()">回退</div>
@@ -9,8 +10,9 @@
   </div>
 </template>
 <script>
-import '@/utils/scss/reset.scss';
+import reset from '@/utils/scss/reset.scss';
 
+console.log('resetreset', reset);
 export default {
   props: ['id', 'q', 'plan'],
   data() {

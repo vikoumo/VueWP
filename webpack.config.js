@@ -121,7 +121,7 @@ const config = {
       }, 'eslint-loader'],
       exclude: path.resolve('node_modules'),
     }, {
-      test: /\.(png|svg|jpg|jpeg|gif)$/,
+      test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|ttf|eot)$/,
       use: [{
         loader: 'url-loader', options: {
           limit: 8192,
