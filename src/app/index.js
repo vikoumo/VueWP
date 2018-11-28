@@ -4,6 +4,7 @@ import axios from 'axios';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import routes from './router';
+import App from './index.vue';
 
 Vue.prototype.axios = axios;
 // 挂在VueRouter，这样this.$route才能用
@@ -15,9 +16,6 @@ const router = routes();
 /* eslint-disable no-new */
 router.beforeEach((to, from, next) => {
   console.log('router-beforeEach', 'to', 'from', to, from);
-  if (to.meta.title) {
-    document.title = to.meta.title;
-  }
   if (to.matched.some(record => record.meta.requiresAuth)) {
     console.log('请登录。。。');
   }
@@ -25,5 +23,6 @@ router.beforeEach((to, from, next) => {
 });
 
 new Vue({
-  router
+  router,
+  render: c => c(App)
 }).$mount('#root');

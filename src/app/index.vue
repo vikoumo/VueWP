@@ -1,58 +1,67 @@
 <template>
   <el-row class="tac">
-    <el-col :span="4">
+    <el-col :span="6">
       <el-menu
-        default-active="2"
-        class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
+        class="el-menu-vertical"
         background-color="#545c64"
         text-color="#fff"
         active-text-color="#ffd04b"
       >
         <el-submenu index="1">
           <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>导航一</span>
+            <i class="el-icon-menu"></i>
+            <span>Vue Demo</span>
           </template>
           <el-menu-item-group>
-            <template slot="title">分组一</template>
-            <el-menu-item index="1-1">选项1</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
+            <el-submenu index="1-1">
+              <div slot="title" @click="handleRoute({name: 'vueRouter'})">VueRouter</div>
+              <el-menu-item index="1-1-1" @click="handleRoute({name: 'VueRouterPage1'})">page1</el-menu-item>
+              <el-menu-item index="1-1-2" @click="handleRoute({name: 'VueRouterPage2'})">page2</el-menu-item>
+            </el-submenu>
           </el-menu-item-group>
-          <el-menu-item-group title="分组2">
-            <el-menu-item index="1-3">选项3</el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="1-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="1-4-1">选项1</el-menu-item>
-          </el-submenu>
         </el-submenu>
         <el-menu-item index="2">
-          <i class="el-icon-menu"></i>
+          <i class="el-icon-location"></i>
           <span slot="title">导航二</span>
-        </el-menu-item>
-        <el-menu-item index="3" disabled>
-          <i class="el-icon-document"></i>
-          <span slot="title">导航三</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <i class="el-icon-setting"></i>
-          <span slot="title">导航四</span>
         </el-menu-item>
       </el-menu>
     </el-col>
-    <el-col :span="12">
+    <el-col :span="17">
       <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span>卡片名称</span>
-        </div>
-        <div>
-          <transition name="fade">
-            <router-view></router-view>
-          </transition>
-        </div>
+        <h1 slot="header">{{ $route.meta.title }}</h1>
+        <transition name="fade">
+          <router-view></router-view>
+        </transition>
       </el-card>
     </el-col>
   </el-row>
 </template>
+
+<style lang="scss" scoped>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+  .el-menu-vertical {
+    margin-right: 50px;
+  }
+  .header {
+    font-size: 20px;
+  }
+</style>
+
+<script>
+export default {
+  data() {
+    return {
+    };
+  },
+  methods: {
+    handleRoute(params = {}) {
+      this.$router.push(params);
+    }
+  }
+};
+</script>
