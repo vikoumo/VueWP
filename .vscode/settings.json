@@ -1,6 +1,6 @@
 {
     "git.ignoreLimitWarning": true,
-    "editor.fontSize": 18,
+    "editor.fontSize": 16,
     "editor.tabSize": 2,
     // 启用/禁用 JavaScript 验证。
     "javascript.validate.enable": false,

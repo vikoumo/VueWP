@@ -1,12 +1,10 @@
 <template>
-  <div class="page1">
-    <h1>scoped</h1>
-    <div @click="showRoute()">显示路由信息</div>
-    <div @click="showProps()">显示props信息</div>
-    <div @click="goBack()">回退</div>
-    <div><router-link to='/page1/456'>jump to page1/456</router-link></div>
+  <div id="vueRouterPage2">
+    <el-button type="text" @click='hanleShow'>显示路由和props信息</el-button>
     <div>User (route){{ $route.params.id }}</div>
-    <div>User (props){{ q }}</div>
+    <div>(props){{ q }}</div>
+    <el-button type="text" @click='goBack'>回退</el-button>
+    <div><el-button type="text" @click='handleRoute'>jump to page1/456</el-button></div>
   </div>
 </template>
 
@@ -14,8 +12,7 @@
 export default {
   props: ['id', 'q', 'plan'],
   data() {
-    return {
-    };
+    return {};
   },
   created() {
     this.fetch();
@@ -36,11 +33,9 @@ export default {
         this.$router.push({ name: 'home' });
       }
     },
-    showRoute() {
+    hanleShow() {
       console.log('$route', this.$route);
-    },
-    showProps() {
-      console.log('props', this.$props);
+      console.log('$props', this.$props);
     },
     fetch() {
       this.axios.get('/user?ID=12345')
@@ -55,6 +50,12 @@ export default {
         .then(() => {
           // always executed
         });
+    },
+    handleRoute() {
+      this.$router.push({
+        name: 'VueRouterPage2',
+        params: { id: 456 }
+      });
     }
   }
 };

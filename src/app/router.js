@@ -1,8 +1,8 @@
 import Router from 'vue-router';
-import Home from '@/stage/home/home.vue';
-// import App from '@/stage/App/App.vue';
-import VueRouterPage1 from '@/stage/VueRouter/page1.vue';
-import VueRouterPage2 from '@/stage/VueRouter/page2.vue';
+import Home from '@/stage/home/home';
+import VueRouter from '@/stage/VueRouter/vueRouter';
+import VueRouterPage1 from '@/stage/VueRouter/page1';
+import VueRouterPage2 from '@/stage/VueRouter/page2';
 
 export default function createRouter() {
   return new Router({
@@ -17,8 +17,7 @@ export default function createRouter() {
       path: '/vueRouter',
       name: 'vueRouter',
       meta: { title: 'vueRouter' },
-      // 重定向
-      redirect: { name: 'VueRouterPage1' },
+      component: VueRouter,
       // 嵌套路由
       children: [{
         path: 'page1',
@@ -33,6 +32,10 @@ export default function createRouter() {
         // 通过 props 解耦，取代与 $route 的耦合
         props: route => Object.assign({}, route.query, route.params),
         meta: { title: 'VueRouter-Page2' }
+      }, {
+        path: 'page',
+        // 重定向
+        redirect: { name: 'VueRouterPage1' }
       }]
     }]
   });

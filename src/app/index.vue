@@ -16,7 +16,7 @@
             <el-submenu index="1-1">
               <div slot="title" @click="handleRoute({name: 'vueRouter'})">VueRouter</div>
               <el-menu-item index="1-1-1" @click="handleRoute({name: 'VueRouterPage1'})">page1</el-menu-item>
-              <el-menu-item index="1-1-2" @click="handleRoute({name: 'VueRouterPage2'})">page2</el-menu-item>
+              <el-menu-item index="1-1-2" @click="handleRoute({name: 'VueRouterPage2', params: { id: 123 }})">page2</el-menu-item>
             </el-submenu>
           </el-menu-item-group>
         </el-submenu>
@@ -28,35 +28,36 @@
     </el-col>
     <el-col :span="17">
       <el-card class="box-card">
-        <h1 slot="header">{{ $route.meta.title }}</h1>
-        <transition name="fade">
-          <router-view></router-view>
-        </transition>
+        <h1 slot="header" class="header">{{ $route.meta.title }}</h1>
+        <div>
+          <transition name="fade">
+            <router-view></router-view>
+          </transition>
+        </div>
       </el-card>
     </el-col>
   </el-row>
 </template>
 
 <style lang="scss" scoped>
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-  }
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
-  }
-  .el-menu-vertical {
-    margin-right: 50px;
-  }
-  .header {
-    font-size: 20px;
-  }
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+.el-menu-vertical {
+  margin-right: 50px;
+}
+.header {
+  font-size: 26px;
+}
 </style>
 
 <script>
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     handleRoute(params = {}) {
