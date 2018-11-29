@@ -1,8 +1,9 @@
 import Router from 'vue-router';
 import Home from '@/stage/home/home';
-import VueRouter from '@/stage/VueRouter/vueRouter';
-import VueRouterPage1 from '@/stage/VueRouter/page1';
-import VueRouterPage2 from '@/stage/VueRouter/page2';
+import VueRouter from '@/stage/vueRouter/vueRouter';
+import VueRouterPage1 from '@/stage/vueRouter/page1';
+import VueRouterPage2 from '@/stage/vueRouter/page2';
+import VueAPI from '@/stage/vue/api';
 
 export default function createRouter() {
   return new Router({
@@ -37,6 +38,11 @@ export default function createRouter() {
         // 重定向
         redirect: { name: 'VueRouterPage1' }
       }]
+    }, {
+      path: '/vueAPI',
+      name: 'vueAPI',
+      component: VueAPI,
+      meta: { title: 'VueAPI demo' }
     }]
   });
 }
