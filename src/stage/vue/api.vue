@@ -12,7 +12,7 @@
     <h3>computed vs watch</h3>
     <el-form>
       <el-form-item label="computed fullName">
-        <el-input :model="computedFullName"></el-input>
+        <el-input v-model="computedFullName"></el-input>
       </el-form-item>
     </el-form>
     <!-- <p>computed fullName {{ computedFullName }}</p> -->
