@@ -10,8 +10,13 @@
     <p>Computed reversed message: "{{ computedReversedMessage }}"</p>
     <p>Methods reversed message: "{{ methodsReversedMessage() }}"</p>
     <h3>computed vs watch</h3>
-    <p>computed fullName {{ computedFullName }}</p>
-    <p>watch fullName {{ fullName }}</p>
+    <el-form>
+      <el-form-item label="computed fullName">
+        <el-input :model="computedFullName"></el-input>
+      </el-form-item>
+    </el-form>
+    <!-- <p>computed fullName {{ computedFullName }}</p> -->
+    <p>watch fullName {{ watchFullName }}</p>
   </div>
 </template>
 
@@ -35,7 +40,7 @@ export default {
       message: 'hello',
       firstName: 'Foo',
       lastName: 'Bar',
-      fullName: 'Foo Bar'
+      watchFullName: 'Foo Bar'
     };
   },
   computed: {
@@ -44,16 +49,21 @@ export default {
     computedReversedMessage() {
       return this.message.split('').reverse().join('');
     },
-    computedFullName() {
-      return `${this.firstName} ${this.lastName}`;
+    computedFullName: {
+      get() {
+        return `${this.firstName} ${this.lastName}`;
+      },
+      set(newVal) {
+        [this.firstName, ...this.lastName] = newVal.split('');
+      }
     }
   },
   watch: {
     firstName(val) {
-      this.fullName = `${val} ${this.lastName}`;
+      this.watchFullName = `${val} ${this.lastName}`;
     },
     lastName(val) {
-      this.fullName = `${this.firstName} ${val}`;
+      this.watchFullName = `${this.firstName} ${val}`;
     }
   },
   methods: {
