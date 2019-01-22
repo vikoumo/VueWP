@@ -144,7 +144,10 @@ const config = {
     }),
     new CleanWebpackPlugin(['dist']),
     new VueLoaderPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.ProvidePlugin({
+      lodash: 'lodash'
+    })
   ],
 };
 

@@ -21,7 +21,12 @@ module.exports = {
       }
     }
   },
+  "globals": {
+    "lodash": true
+  },
   rules: {
     'comma-dangle': ['error', 'never'], //是否允许对象中出现结尾逗号
+    'func-names': 0,
+    'prefer-arrow-callback': 0
   },
 };
