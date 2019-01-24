@@ -41,6 +41,55 @@
       </li>
     </ul>
     <el-button type="primary" @click="pushItem">pushItem</el-button>
+    <h3>事件修饰符</h3>
+    <div class="parent" @click="print('1')">
+      <div class="child" @click="print('2')">
+        <div class="grant" @click="print('3')" />
+      </div>
+      <div class="child" @click.stop="print('2')">
+        <div class="grant" @click.stop="print('3')">
+          .stop阻止事件冒泡
+        </div>
+      </div>
+      <div class="child" @click="print('2')">
+        <div class="grant" @click.capture.prevent="print('3')">
+          .prevent阻止捕获
+        </div>
+      </div>
+      <div class="child" @click.capture="print('2')">
+        <!-- 添加事件监听器时使用事件捕获模式 -->
+        <!-- 即元素自身触发的事件先在此处理，然后才交由内部元素进行处理 -->
+        <div class="grant" @click.capture="print('3')">
+          使用事件捕获模式.capture
+        </div>
+      </div>
+      <div class="child" @click.self="print('2')">
+        <!-- 即事件不是从内部元素触发的 -->
+        <div class="grant" @click.self="print('3')">
+          元素自身触发处理函数.self
+        </div>
+      </div>
+      <div class="child" @click.once="print('2')">
+        <!-- 只触发一次 -->
+        <div class="grant" @click.once="print('3')">
+          .once
+        </div>
+      </div>
+    </div>
+    <h3>v-model</h3>
+    <input v-model="searchText">
+    <!-- || -->
+    <!-- input 有个 oninput 事件,监听输入事件 -->
+    <input
+      :value="searchText"
+      @input="searchText = $event.target.value"
+    >
+    <custom-input v-model="searchText" />
+    <!-- || -->
+    <custom-input
+      :value="searchText"
+      @input="searchText = $event"
+    />
   </div>
 </template>
 
@@ -51,12 +100,36 @@
   h3 {
     font-size: 20px;
   }
+  .parent {
+    width: 100%;
+    height: 200px;
+    background-color: brown;
+    display: flex;
+    flex-wrap: wrap;
+    .child {
+      width: 15%;
+      height: 80px;
+      background-color: burlywood;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    .grant {
+      width: 80%;
+      height: 50px;
+      background-color: aqua;
+    }
+  }
 }
 </style>
 
 
 <script>
+import customInput from './component/custom-input';
+
 export default {
+  components: {
+    customInput
+  },
   data() {
     return {
       onece: 'abc',
@@ -71,7 +144,8 @@ export default {
       items: [
         { name: 'aa' },
         { name: 'bb' }
-      ]
+      ],
+      searchText: 'aa'
     };
   },
   computed: {
@@ -137,6 +211,9 @@ export default {
     pushItem() {
       // this.items.push({ name: 'cc' });
       this.$set(this.items, 2, { name: 'cc' });
+    },
+    print(string) {
+      console.log(string);
     }
   }
 };
