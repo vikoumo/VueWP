@@ -124,12 +124,8 @@
 
 
 <script>
-import customInput from './component/custom-input';
 
 export default {
-  components: {
-    customInput
-  },
   data() {
     return {
       onece: 'abc',

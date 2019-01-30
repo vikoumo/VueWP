@@ -20,7 +20,8 @@
             </el-submenu>
             <el-submenu index="1-2">
               <div slot="title">Vue</div>
-              <el-menu-item index="1-1-1" @click="handleRoute({name: 'vueAPI'})">vueAPI demo</el-menu-item>
+              <el-menu-item index="1-2-1" @click="handleRoute({name: 'vueAPI'})">vueAPI demo</el-menu-item>
+              <el-menu-item index="1-2-2" @click="handleRoute({name: 'deepVueAPI'})">deep vueAPI demo</el-menu-item>
             </el-submenu>
           </el-menu-item-group>
         </el-submenu>

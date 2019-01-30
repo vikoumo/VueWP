@@ -1,6 +1,6 @@
 <template>
   <div id='deepApi'>
-    <h3>组件注册</h3>
+    <h3>基础组件的自动化全局注册</h3>
   </div>
 </template>
 <style lang="scss" scoped>

@@ -4,6 +4,7 @@ import VueRouter from '@/stage/vueRouter/vueRouter';
 import VueRouterPage1 from '@/stage/vueRouter/page1';
 import VueRouterPage2 from '@/stage/vueRouter/page2';
 import VueAPI from '@/stage/vue/api';
+import deepVueAPI from '@/stage/vue/deepAPI';
 
 export default function createRouter() {
   return new Router({
@@ -43,6 +44,11 @@ export default function createRouter() {
       name: 'vueAPI',
       component: VueAPI,
       meta: { title: 'VueAPI demo' }
+    }, {
+      path: '/deepVueAPI',
+      name: 'deepVueAPI',
+      component: deepVueAPI,
+      meta: { title: 'deepVueAPI demo' }
     }]
   });
 }
