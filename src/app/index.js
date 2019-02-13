@@ -26,12 +26,11 @@ const requireComponent = require.context(
   // 其组件目录的相对路径
   '../components',
   // 是否查询其子目录
-  false,
+  true,
   // 匹配基础组件文件名的正则表达式
-  /[A-Z]\w+\.(vue|js)$/
+  /[A-Z]\w+$/
 );
 requireComponent.keys().forEach((fileName) => {
-  console.log('1111', fileName);
   // 获取组件配置
   const componentConfig = requireComponent(fileName);
   // 获取组件的 PascalCase 命名
@@ -41,7 +40,7 @@ requireComponent.keys().forEach((fileName) => {
       fileName.replace(/^\.\/(.*)\.\w+$/, '$1')
     )
   );
-
+  console.log('全局组件', componentName);
   // 全局注册组件
   Vue.component(
     componentName,
