@@ -1,5 +1,9 @@
 <template>
   <div id='vueApi'>
+    <h3>scoped && module</h3>
+    <p :class='api.red'>
+      This should be red
+    </p>
     <h3>v-once</h3>
     <p>Message: {{ onece }}</p>
     <p v-once>这个将不会改变: {{ onece }}</p>
@@ -92,7 +96,12 @@
     />
   </div>
 </template>
-
+<style module='api'>
+.red {
+  color: red;
+  font-weight: bold;
+}
+</style>
 <style lang="scss" scoped>
 #vueApi {
   color: #2c3e50;
